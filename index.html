@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sujetos del Derecho Agrario - Instituto Tadheuss</title>
+    <!-- Tailwind CSS para el diseño -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- React y Babel para ejecutar JSX en el navegador -->
+    <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;900&display=swap');
+        body { font-family: 'Inter', sans-serif; }
+        .animate-fade-in { animation: fadeIn 0.7s ease-in-out; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    </style>
+</head>
+<body class="bg-slate-50">
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const { useState, useEffect } = React;
+
+        // Mock de Lucide Icons para entorno HTML simple
+        const Icon = ({ name, className }) => {
+            useEffect(() => {
+                lucide.createIcons();
+            }, [name]);
+            return <i data-lucide={name} className={className}></i>;
+        };
+
+        const App = () => {
+            const [currentSlide, setCurrentSlide] = useState(0);
+
+            const subjects = [
+                {
+                    id: 'individuales',
+                    title: 'Sujetos Individuales',
+                    icon: "user",
+                    color: "text-blue-600",
+                    items: [
+                        { label: 'Ejidatarios', ref: 'Arts. 12, 15, 16 LA', desc: 'Hombres y mujeres titulares de derechos agrarios con certificado.' },
+                        { label: 'Comuneros', ref: 'Art. 101 LA', desc: 'Titulares en el régimen de comunidad con derecho al uso y disfrute de parcelas.' },
+                        { label: 'Avecindados', ref: 'Art. 13 LA', desc: 'Mexicanos que residen un año o más y son reconocidos por la asamblea.' },
+                        { label: 'Posesionarios', ref: 'Art. 48 LA', desc: 'Poseedores de tierras ejidales por 5 años (buena fe) o 10 años (mala fe).' },
+                        { label: 'Sucesores', ref: 'Arts. 17, 18 LA', desc: 'Herederos designados en la lista de sucesión o por orden de preferencia legal.' }
+                    ]
+                },
+                {
+                    id: 'colectivos',
+                    title: 'Sujetos Colectivos',
+                    icon: "users",
+                    color: "text-green-600",
+                    items: [
+                        { label: 'Ejidos', ref: 'Art. 9 LA', desc: 'Núcleos de población con personalidad jurídica y patrimonio propio.' },
+                        { label: 'Comunidades', ref: 'Art. 98 LA', desc: 'Núcleos con reconocimiento derivado de acción agraria o restitución.' }
+                    ]
+                },
+                {
+                    id: 'organos',
+                    title: 'Órganos del Ejido',
+                    icon: "home",
+                    color: "text-purple-600",
+                    items: [
+                        { label: 'Asamblea', ref: 'Arts. 22, 23 LA', desc: 'Órgano supremo del ejido. Competencia en delimitación y destino de tierras.' },
+                        { label: 'Comisariado Ejidal', ref: 'Arts. 32, 33 LA', desc: 'Órgano de ejecución y representación administrativa (Presidente, Secretario, Tesorero).' },
+                        { label: 'Consejo de Vigilancia', ref: 'Arts. 35, 36 LA', desc: 'Encargado de vigilar que los actos del comisariado se ajusten a la ley.' },
+                        { label: 'Junta de Pobladores', ref: 'Arts. 41, 42 LA', desc: 'Participación comunitaria para servicios y obras en el asentamiento humano.' }
+                    ]
+                },
+                {
+                    id: 'autoridades',
+                    title: 'Autoridades Agrarias',
+                    icon: "landmark",
+                    color: "text-red-600",
+                    items: [
+                        { label: 'Procuraduría Agraria', ref: 'Art. 134 LA', desc: 'Organismo descentralizado para la defensa de los derechos de los sujetos agrarios.' },
+                        { label: 'Reg. Agrario Nacional', ref: 'Art. 148 LA', desc: 'Control de la tenencia de la tierra y seguridad documental.' },
+                        { label: 'Tribunales Agrarios', ref: 'Art. 163 LA', desc: 'Órganos jurisdiccionales para dirimir controversias agrarias.' }
+                    ]
+                },
+                {
+                    id: 'otros',
+                    title: 'Otros Sujetos',
+                    icon: "scale",
+                    color: "text-amber-600",
+                    items: [
+                        { label: 'Pequeños Propietarios', ref: 'Arts. 115-120 LA', desc: 'Titulares de tierras agrícolas, ganaderas o forestales bajo límites legales.' },
+                        { label: 'Sociedades Rurales', ref: 'Arts. 108, 110, 111 LA', desc: 'Uniones de Ejidos, ARIC y Sociedades de Producción Rural (SPR).' }
+                    ]
+                }
+            ];
+
+            const slides = [
+                {
+                    type: 'intro',
+                    title: 'Sujetos en el Derecho Agrario',
+                    subtitle: 'Semana 2: Derecho Agrario y Derechos Indígenas',
+                    institution: 'Instituto Tadheuss - Licenciatura en Derecho',
+                    context: 'Análisis sistémico basado en la Ley Agraria (Ref. 2025)'
+                },
+                {
+                    type: 'map',
+                    title: 'Mapa Conceptual General',
+                    description: 'Estructura jerárquica de los actores agrarios en México.'
+                },
+                ...subjects.map(s => ({ ...s, type: 'detail' })),
+                {
+                    type: 'references',
+                    title: 'Referencias Académicas',
+                    content: [
+                        'Cámara de Diputados del H. Congreso de la Unión. (2025). Ley Agraria. Última Reforma DOF 14-11-2025.',
+                        'Constitución Política de los Estados Unidos Mexicanos. (1917). Artículo 27.',
+                        'Pérez, R. (2024). Derecho Agrario Contemporáneo y la Propiedad Social en México.'
+                    ]
+                }
+            ];
+
+            const nextSlide = () => setCurrentSlide((prev) => (prev + 1) % slides.length);
+            const prevSlide = () => setCurrentSlide((prev) => (prev - 1 + slides.length) % slides.length);
+
+            const current = slides[currentSlide];
+
+            return (
+                <div className="min-h-screen flex items-center justify-center p-4">
+                    <div className="w-full max-w-5xl bg-white rounded-2xl shadow-2xl border border-slate-200 overflow-hidden relative min-h-[650px] flex flex-col">
+                        
+                        {/* Header */}
+                        <div className="bg-slate-900 text-white p-6 flex justify-between items-center">
+                            <div>
+                                <h1 className="text-xl font-bold">Instituto Tadheuss</h1>
+                                <p className="text-xs text-slate-400 uppercase tracking-widest">Chetumal, Quintana Roo</p>
+                            </div>
+                            <div className="text-right">
+                                <span className="text-sm font-medium text-slate-300">Sujetos del Derecho Agrario</span>
+                                <p className="text-[10px] text-slate-500">Slide {currentSlide + 1} de {slides.length}</p>
+                            </div>
+                        </div>
+
+                        {/* Content Area */}
+                        <div className="flex-grow p-8 flex flex-col justify-center animate-fade-in">
+                            
+                            {current.type === 'intro' && (
+                                <div className="text-center space-y-6">
+                                    <div className="inline-block p-4 bg-blue-100 rounded-full mb-4">
+                                        <Icon name="file-text" className="w-12 h-12 text-blue-700" />
+                                    </div>
+                                    <h2 className="text-5xl font-black text-slate-900 leading-tight">{current.title}</h2>
+                                    <p className="text-2xl text-blue-700 font-semibold">{current.subtitle}</p>
+                                    <div className="h-1 w-24 bg-blue-600 mx-auto"></div>
+                                    <p className="text-slate-500 italic">{current.context}</p>
+                                </div>
+                            )}
+
+                            {current.type === 'map' && (
+                                <div className="space-y-8 text-center">
+                                    <h2 className="text-3xl font-bold text-slate-900">{current.title}</h2>
+                                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-left">
+                                        {subjects.slice(0, 3).map((s, idx) => (
+                                            <div key={idx} className="p-4 border-2 border-slate-100 rounded-xl bg-slate-50 hover:border-blue-300 cursor-pointer transition-all" onClick={() => setCurrentSlide(idx + 2)}>
+                                                <div className="flex items-center gap-3 mb-2">
+                                                    <Icon name={s.icon} className={`w-5 h-5 ${s.color}`} />
+                                                    <h3 className="font-bold text-slate-800">{s.title}</h3>
+                                                </div>
+                                                <ul className="text-xs space-y-1 text-slate-600">
+                                                    {s.items.map((it, i) => <li key={i}>• {it.label}</li>)}
+                                                </ul>
+                                            </div>
+                                        ))}
+                                    </div>
+                                    <div className="flex justify-center gap-6 text-left">
+                                        {subjects.slice(3, 5).map((s, idx) => (
+                                            <div key={idx} className="w-full max-w-xs p-4 border-2 border-slate-100 rounded-xl bg-slate-50 hover:border-blue-300 cursor-pointer transition-all" onClick={() => setCurrentSlide(idx + 5)}>
+                                                <div className="flex items-center gap-3 mb-2">
+                                                    <Icon name={s.icon} className={`w-5 h-5 ${s.color}`} />
+                                                    <h3 className="font-bold text-slate-800">{s.title}</h3>
+                                                </div>
+                                                <ul className="text-xs space-y-1 text-slate-600">
+                                                    {s.items.map((it, i) => <li key={i}>• {it.label}</li>)}
+                                                </ul>
+                                            </div>
+                                        ))}
+                                    </div>
+                                </div>
+                            )}
+
+                            {current.type === 'detail' && (
+                                <div>
+                                    <div className="flex items-center gap-4 mb-6">
+                                        <div className="p-3 bg-slate-100 rounded-xl">
+                                            <Icon name={current.icon} className={`w-8 h-8 ${current.color}`} />
+                                        </div>
+                                        <h2 className="text-4xl font-bold text-slate-900">{current.title}</h2>
+                                    </div>
+                                    <div className="space-y-4">
+                                        {current.items.map((item, idx) => (
+                                            <div key={idx} className="p-4 bg-slate-50 rounded-xl border-l-4 border-blue-600 shadow-sm">
+                                                <div className="flex justify-between items-center mb-1">
+                                                    <h4 className="text-lg font-bold text-blue-900">{item.label}</h4>
+                                                    <span className="text-xs font-mono font-bold bg-blue-100 text-blue-700 px-2 py-1 rounded">
+                                                        {item.ref}
+                                                    </span>
+                                                </div>
+                                                <p className="text-sm text-slate-600 italic">{item.desc}</p>
+                                            </div>
+                                        ))}
+                                    </div>
+                                </div>
+                            )}
+
+                            {current.type === 'references' && (
+                                <div className="space-y-6">
+                                    <h2 className="text-3xl font-bold text-slate-900 border-b pb-4">Bibliografía</h2>
+                                    {current.content.map((ref, i) => (
+                                        <p key={i} className="pl-8 -indent-8 text-slate-700">{ref}</p>
+                                    ))}
+                                    <div className="mt-8 p-4 bg-amber-50 border border-amber-200 rounded-xl text-sm text-amber-800">
+                                        <strong>Nota Jurídica Regional:</strong> En Quintana Roo, la operatividad del ejido es vital para el desarrollo urbano. Comprender estos sujetos es esencial para la práctica legal en Chetumal.
+                                    </div>
+                                </div>
+                            )}
+
+                        </div>
+
+                        {/* Footer Controls */}
+                        <div className="bg-slate-50 p-6 border-t flex justify-between items-center">
+                            <button onClick={prevSlide} className="flex items-center gap-2 text-slate-600 hover:text-black font-semibold">
+                                <Icon name="chevron-left" className="w-5 h-5" /> Anterior
+                            </button>
+                            <div className="flex gap-2">
+                                {slides.map((_, i) => (
+                                    <div key={i} className={`h-2 rounded-full transition-all ${currentSlide === i ? 'w-6 bg-blue-600' : 'w-2 bg-slate-300'}`} />
+                                ))}
+                            </div>
+                            <button onClick={nextSlide} className="flex items-center gap-2 bg-slate-900 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-all font-semibold shadow-lg">
+                                Siguiente <Icon name="chevron-right" className="w-5 h-5" />
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            );
+        };
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<App />);
+    </script>
+</body>
+</html>
